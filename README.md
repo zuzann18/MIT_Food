@@ -1,4 +1,3 @@
-# MIT_Food
 **Report Title: FoodHub Order Data Analysis**
 
 **Project and Course Name:** Foundations of Data Science
@@ -13,7 +12,7 @@
 - **Peak Order Times:** Orders are more frequent on weekends.
 - **Cuisine Popularity:** American, Japanese, and Mexican cuisines have the highest demand.
 - **Order Cost Trends:** The average order cost is around **$20-$30**.
-- **Delivery & Preparation Times:**
+- **Delivery & Preparation Times:** 
   - Average **food preparation time**: ~25 minutes.
   - Average **delivery time**: ~22 minutes.
 - **Ratings Distribution:** Some ratings are missing (marked as "Not given"). Orders with higher costs tend to have better ratings.
@@ -59,14 +58,40 @@ The objective is to analyze FoodHub’s order dataset to gain insights into rest
 ## **Univariate Analysis**
 
 ### **Order Cost Distribution:**
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(8, 5))
+sns.histplot(df['cost_of_the_order'], bins=30, kde=True)
+plt.title("Distribution of Order Cost")
+plt.xlabel("Order Cost ($)")
+plt.ylabel("Frequency")
+plt.show()
+```
 - Most orders cost between **$10-$40**.
 - Few high-value orders exceed **$50**.
 
 ### **Ratings Analysis:**
+```python
+plt.figure(figsize=(6, 4))
+sns.countplot(x=df['rating'].replace("Not given", "Missing"))
+plt.title("Ratings Distribution")
+plt.xlabel("Customer Rating")
+plt.ylabel("Count")
+plt.show()
+```
 - Ratings range from **1 to 5**, but some are missing.
 - Higher-cost orders tend to have **better ratings**.
 
 ### **Delivery Time:**
+```python
+plt.figure(figsize=(8, 5))
+sns.boxplot(x=df['delivery_time'])
+plt.title("Delivery Time Distribution")
+plt.xlabel("Delivery Time (Minutes)")
+plt.show()
+```
 - Average: **22 minutes**.
 - Some extreme values exceed **45 minutes**, indicating delays.
 
@@ -75,6 +100,14 @@ The objective is to analyze FoodHub’s order dataset to gain insights into rest
 ## **Multivariate Analysis**
 
 ### **Correlation Analysis:**
+```python
+import numpy as np
+corr_matrix = df.corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", linewidths=0.5)
+plt.title("Correlation Matrix")
+plt.show()
+```
 - **Cost vs. Rating:** Higher-cost orders generally receive better ratings.
 - **Delivery Time vs. Order Cost:** No strong correlation, suggesting delivery delays are not price-dependent.
 - **Preparation Time vs. Delivery Time:** Some restaurants have consistently higher wait times.
